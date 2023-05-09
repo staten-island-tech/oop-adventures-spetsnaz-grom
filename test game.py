@@ -31,7 +31,6 @@ elif choice1.lower() == "b":
 # Second choice
 print("\nYou receive new orders to capture a German fort.")
 time.sleep(1)
-print("What do you do?")
 time.sleep(1)
 
 choice2 = input("A) Attack head-on or B) Lay siege to the fort: ")
@@ -82,7 +81,7 @@ choice4 = input("A) Hold the bridge at all costs or B) Retreat and set up a new 
 
 if choice4.lower() == "a":
     print("You order your soldiers to hold the bridge at all costs.")
-    time.sleep(1)
+    time.sleep(1)  
     print("The Germans launch a fierce assault and you suffer heavy casualties, but you manage to hold the bridge.")
     time.sleep(1)
     print("Well done, comrade! Your determination and sacrifice will be remembered.")
