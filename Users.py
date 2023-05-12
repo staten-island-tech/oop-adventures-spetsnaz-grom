@@ -38,6 +38,8 @@ time.sleep(1)
 
 #first choice
 
+
+
 choice1 = input("A) FighterJet B) SpeedJet C) StealthJet: ")
 
 if choice1.lower() == "a":
