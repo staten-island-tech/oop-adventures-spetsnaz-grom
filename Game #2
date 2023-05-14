@@ -1,0 +1,126 @@
+print("You are a soldier in the United States Army Rangers, and you have been sent to fight in the Republic of Wadiya.")
+print("You arrive at Fort Ripton, a military base in the occupied province of al hilal, and are immediately called to select your choice of gear by high command.")
+
+class Player:
+    def __init__(self):
+        self.chosen_class = None
+
+    def choose_class(self, player_class):
+        if self.chosen_class is None:
+            self.chosen_class = player_class
+            print(f"You have chosen the {player_class.__name__} class.")
+        else:
+            print("You have already chosen a class.")
+            
+
+
+class Juggernaut:
+    def __init__(self):
+        self.hp = 1000
+        self.speed = 10 # Juggernaut is slow
+        self.armor = 500 # Juggernaut has a minigun with a 500 round ammo reserve
+        self.resistance = ["bullet", "explosive"]
+        self.helmet = "Altyn"
+    
+    def take_damage(self, damage_type, damage_amount):
+        if damage_type in self.resistance:
+            damage_amount /= 2 # Resistance reduces damage by half
+        self.hp -= damage_amount
+        if self.hp <= 0:
+            print("The Juggernaut has been defeated.")
+            return True # Player has been killed
+        else:
+            return False # Player is still alive
+    
+    def check_kill(self, damage_type):
+        if damage_type in ["tank", "jet", "helicopter", "gunship"]:
+            print("The Juggernaut has been defeated.")
+            return True # Player has been killed
+        elif damage_type == "bullet":
+            self.armor -= 1
+            if self.armor <= 0:
+                print("The Juggernaut has been defeated.")
+                return True # Player has been killed
+            else:
+                return False # Player is still alive
+        elif damage_type in ["rocket", "sniper"]:
+            self.hp -= 100 # Rocket launchers and snipers deal 100 damage per shot
+            if self.hp <= 0:
+                print("The Juggernaut has been defeated.")
+                return True # Player has been killed
+            else:
+                return False # Player is still alive
+            
+    
+    class Demolition:
+      def __init__(self):
+        self.hp = 50
+        self.speed = 50 # Demolition is the second fastest class
+        self.armor = 0 # Demolition is lightly armored
+        self.resistance = []
+        self.weapons = ["grenade launcher", "pistol"]
+    
+    def take_damage(self, damage_type, damage_amount):
+        self.hp -= damage_amount
+        if self.hp <= 0:
+            print("The Demolition has been defeated.")
+            return True # Player has been killed
+        else:
+            return False # Player is still alive
+    
+    def check_kill(self, damage_type):
+        if damage_type in ["tank", "jet", "helicopter", "gunship"]:
+            print("The Demolition has been defeated.")
+            return True # Player has been killed
+        elif damage_type == "bullet":
+            self.hp -= 1 # Handheld bullet weapons take 50 shots to kill
+            if self.hp <= 0:
+                print("The Demolition has been defeated.")
+                return True # Player has been killed
+            else:
+                return False # Player is still alive
+        elif damage_type in ["rocket", "sniper"]:
+            self.hp -= 25 # Rocket launchers and snipers deal 25 damage per shot
+            if self.hp <= 0:
+                print("The Demolition has been defeated.")
+                return True # Player has been killed
+            else:
+                return False # Player is still alive
+class Assault:
+    def __init__(self):
+        self.hp = 20
+        self.speed = 100 # Assault is the fastest class
+        self.armor = 20 # Assault has 20 hp of armor
+        self.resistance = []
+        self.weapons = ["M4A1 assault rifle", "AWP sniper rifle", "colt 1911 pistol"]
+    
+    def take_damage(self, damage_type, damage_amount):
+        self.armor -= damage_amount
+        if self.armor <= 0:
+            self.hp -= 1 # Once armor is depleted, player takes damage to hp
+            if self.hp <= 0:
+                print("The Assault has been defeated.")
+                return True # Player has been killed
+            else:
+                return False # Player is still alive
+        else:
+            return False # Player is still alive
+    
+    def check_kill(self, damage_type):
+        if damage_type in ["tank", "jet", "helicopter", "gunship"]:
+            print("The Assault has been defeated.")
+            return True # Player has been killed
+        elif damage_type == "bullet":
+            self.armor -= 1 # Handheld bullet weapons take 20 shots to deplete armor
+            if self.armor <= 0:
+                self.hp -= 1 # Once armor is depleted, player takes damage to hp
+                if self.hp <= 0:
+                    print("The Assault has been defeated.")
+                    return True # Player has been killed
+                else:
+                    return False # Player is still alive
+            else:
+                return False # Player is still alive
+        elif damage_type in ["rocket", "sniper"]:
+            print("The Assault has been defeated.")
+            return True # Player has been killed
