@@ -5,14 +5,10 @@ class Player:
     def __init__(self):
         self.chosen_class = None
 
-    def choose_class(self, player_class):
-        if self.chosen_class is None:
-            self.chosen_class = player_class
-            print(f"You have chosen the {player_class.__name__} class.")
-        else:
+    def choose_class(self):
+        if self.chosen_class is not None:
             print("You have already chosen a class.")
-            
-
+            return
 
 class Juggernaut:
     def __init__(self):
@@ -124,3 +120,20 @@ class Assault:
         elif damage_type in ["rocket", "sniper"]:
             print("The Assault has been defeated.")
             return True # Player has been killed
+
+
+        while True:
+            class_choice = input("Select a class (Juggernaut, Demolition, or Assault): ").strip().capitalize()
+            if class_choice in ["Juggernaut", "Demolition", "Assault"]:
+                if class_choice == "Juggernaut":
+                    self.chosen_class = Juggernaut()
+                elif class_choice == "Demolition":
+                    self.chosen_class = Demolition()
+                elif class_choice == "Assault":
+                    self.chosen_class = Assault()
+
+                print(f"Thank you for selecting the {class_choice} class. You may now proceed.")
+                break
+            else:
+                print("Invalid class selected.")
+
