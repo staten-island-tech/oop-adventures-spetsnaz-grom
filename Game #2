@@ -50,6 +50,33 @@ class Juggernaut:
     
     
     
+  
+    
+    
+    def check_kill(self, damage_type):
+        if damage_type in ["tank", "jet", "helicopter", "gunship"]:
+            print("The Assaultman has been defeated.")
+            return True # Player has been killed
+        elif damage_type == "bullet":
+            self.armor -= 1 # Handheld bullet weapons take 20 shots to deplete armor
+            if self.armor <= 0:
+                self.hp -= 1 # Once armor is depleted, player takes damage to hp
+                if self.hp <= 0:
+                    print("The Assault has been defeated.")
+                    return True # Player has been killed
+                else:
+                    return False # Player is still alive
+            else:
+                return False # Player is still alive
+        elif damage_type in ["rocket", "sniper"]:
+            print("The Assault has been defeated.")
+            return True # Player has been killed
+        
+
+
+
+
+
     class Demolition:
       def __init__(self):
         self.hp = 50
@@ -111,42 +138,26 @@ class Assault:
                 return False # Player is still alive
         else:
             return False # Player is still alive
-    
-    def check_kill(self, damage_type):
-        if damage_type in ["tank", "jet", "helicopter", "gunship"]:
-            print("The Assaultman has been defeated.")
-            return True # Player has been killed
-        elif damage_type == "bullet":
-            self.armor -= 1 # Handheld bullet weapons take 20 shots to deplete armor
-            if self.armor <= 0:
-                self.hp -= 1 # Once armor is depleted, player takes damage to hp
-                if self.hp <= 0:
-                    print("The Assault has been defeated.")
-                    return True # Player has been killed
-                else:
-                    return False # Player is still alive
-            else:
-                return False # Player is still alive
-        elif damage_type in ["rocket", "sniper"]:
-            print("The Assault has been defeated.")
-            return True # Player has been killed
 
 
        
        
-       
-        while True:
-            class_choice = input("Select a class (Juggernaut, Demolition, or Assault): ").strip().capitalize()
-            if class_choice in ["Juggernaut", "Demolition", "Assault"]:
-                if class_choice == "Juggernaut":
-                    self.chosen_class = Juggernaut()
-                elif class_choice == "Demolition":
-                    self.chosen_class = Demolition()
-                elif class_choice == "Assault":
-                    self.chosen_class = Assault()
 
-                print(f"Thank you for selecting the {class_choice} class. You may now proceed.")
-                break
-            else:
-                print("Invalid class selected.")
+while True:
+    class_choice = input("Select a class (Juggernaut, Demolition, or Assault): ").strip().capitalize()
+if class_choice in ["Juggernaut", "Demolition", "Assault"]:
+    if class_choice == "Juggernaut":
+        self.chosen_class = Juggernaut()
+    elif class_choice == "Demolition":
+        self.chosen_class = Demolition()
+    elif class_choice == "Assault":
+        self.chosen_class = Assault()
+    print(f"Thank you for selecting the {class_choice} class. You may now proceed.")
+    break 
+else:
+    print("Invalid class selected.")
+
+    print ("After selecting a class you are deployed to secure a heavily armed Wadiyan objective. The objective is a fortified compound in the middle of Al hilal. It is a major startegic point that must be captured.")
+
+
 
