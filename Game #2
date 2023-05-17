@@ -1,10 +1,14 @@
+
+
+
 print("You are a soldier in the United States Army Rangers, and you have been sent to fight in the Republic of Wadiya.")
 print("You arrive at Fort Ripton, a military base in the occupied province of al hilal, and are immediately called to select your choice of gear by high command.")
 
 class Player:
     def __init__(self):
         self.chosen_class = None
-
+        self.points = 2000
+    
     def choose_class(self):
         if self.chosen_class is not None:
             print("You have already chosen a class.")
@@ -145,19 +149,42 @@ class Assault:
 
 while True:
     class_choice = input("Select a class (Juggernaut, Demolition, or Assault): ").strip().capitalize()
-if class_choice in ["Juggernaut", "Demolition", "Assault"]:
-    if class_choice == "Juggernaut":
-        self.chosen_class = Juggernaut()
-    elif class_choice == "Demolition":
-        self.chosen_class = Demolition()
-    elif class_choice == "Assault":
-        self.chosen_class = Assault()
-    print(f"Thank you for selecting the {class_choice} class. You may now proceed.")
-    break 
-else:
-    print("Invalid class selected.")
+    if class_choice in ["Juggernaut", "Demolition", "Assault"]:
+        player = Player()
+        if class_choice == "Juggernaut":
+            player.chosen_class = Juggernaut()
+        elif class_choice == "Demolition":
+            player.chosen_class = Demolition()
+        elif class_choice == "Assault":
+            player.chosen_class = Assault()
+        print(f"Thank you for selecting the {class_choice} class. You may now proceed.")
+        break
+    else:
+        print("Invalid class selected.")
 
-    print ("After selecting a class you are deployed to secure a heavily armed Wadiyan objective. The objective is a fortified compound in the middle of Al hilal. It is a major startegic point that must be captured.")
 
+
+print("After selecting a class, you are deployed to secure a heavily armed Wadiyan objective.")
+print("The objective is a fortified compound in the middle of Al hilal. It is a major strategic point that must be captured.")
+
+for mile in range(1, 6):
+    print(f"Driving through mile {mile}...")
+    if mile == 1:
+        choice = input("You come across an NPC. Do you want to interact with him? (Y/N): ").strip().capitalize()
+        if choice == "Y":
+            print("You decide to interact with the NPC.")
+            print("NPC: Hello, American soldier. This here is a buystation. Let me tell you how it works.")
+            print("NPC: You can use the buystation by pressing the B key to interact with it.")
+            print("NPC: To make a purchase, press the A key.")
+            print("NPC: Each buystation buy costs 2000 points.")
+            print("NPC: Good luck in your battle against terrorism!")
+        else:
+            print("You choose not to interact with the NPC and continue your mission.")
+    else:
+        
+        pass
+
+
+print("You arrive at a hill overlooking the base, and you see a buystation. Buy a kill streak from the buystation to proceed.")
 
 
