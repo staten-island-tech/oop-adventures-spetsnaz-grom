@@ -34,9 +34,10 @@ class BuyStation:
             if item in self.choices:
                 selected_item = self.choices[item]
                 cost = self.item_costs[selected_item]
-                if self.points >= cost:
+                if player.points >= cost:
                     print("You bought: {}".format(selected_item))
-                    self.points -= cost
+                    player.points -= cost
+                    print("Points remaining: {}".format(player.points))
                     self.process_purchase(selected_item)
                 else:
                     print("Insufficient points to buy the item.")
@@ -44,5 +45,5 @@ class BuyStation:
                 print("Invalid choice. Please try again.")
 
     def process_purchase(self, item):
-        # Add code here to handle the logic of the purchased item
+      
         pass
