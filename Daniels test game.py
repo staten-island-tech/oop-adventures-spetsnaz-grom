@@ -1,9 +1,5 @@
 print("You are a soldier in the United States Army Rangers, and you have been sent to fight in the Republic of Wadiya.")
-print("You arrive at Fort Ripton, a military base in the occupied province of al hilal, and are immediately called to select your choice of gear by high command.")
-
-
-
-
+print("You arrive at Fort Ripton, a military base in the occupied province of Al Hilal, and are immediately called to select your choice of gear by high command.")
 
 
 class Player:
@@ -24,6 +20,37 @@ class Player:
                 else:
                     print("Invalid class selected.")
 
+    def take_damage(self, damage_amount):
+        if self.chosen_class == "Juggernaut":
+            return self.juggernaut.take_damage(damage_amount)
+        elif self.chosen_class == "Demolition":
+            return self.demolition.take_damage(damage_amount)
+        elif self.chosen_class == "Assault":
+            return self.assault.take_damage(damage_amount)
+
+    def check_kill(self, damage_type):
+        if self.chosen_class == "Juggernaut":
+            return self.juggernaut.check_kill(damage_type)
+        elif self.chosen_class == "Demolition":
+            return self.demolition.check_kill(damage_type)
+
+    def choose_weapon(self):
+        if self.chosen_class == "Assault":
+            self.weapon = "M4A1 assault rifle"
+        elif self.chosen_class == "Demolition":
+            self.weapon = "Grenade launcher"
+        elif self.chosen_class == "Juggernaut":
+            self.weapon = "Minigun"
+        elif self.chosen_class == "Sniper":
+            self.weapon = "AWP sniper rifle"
+
+    def shoot(self):
+        print(f"{self.weapon} fires.")
+
+    def reload(self):
+        print(f"{self.weapon} has been reloaded.")
+
+
 class Juggernaut:
     def __init__(self):
         self.hp = 1000
@@ -32,7 +59,7 @@ class Juggernaut:
         self.resistance = ["bullet", "explosive"]
         self.helmet = "Altyn"
 
-    def take_damage(self, damage_type, damage_amount):
+    def take_damage(self, damage_amount):
         if damage_type in self.resistance:
             damage_amount /= 2
         self.hp -= damage_amount
@@ -61,60 +88,66 @@ class Juggernaut:
             else:
                 return False
 
+
 class Demolition:
     def __init__(self):
-        self.hp = 50
-        self.speed = 50
-        self.armor = 0
-        self.resistance = []
-        self.weapons = ["grenade launcher", "pistol"]
+        self.hp = 500
+        self.speed = 15
+        self.explosives = 10
 
-    def take_damage(self, damage_type, damage_amount):
+    def take_damage(self, damage_amount):
         self.hp -= damage_amount
         if self.hp <= 0:
-            print("The Demolition has been defeated.")
+            print("The Demolition expert has been defeated.")
             return True
         else:
             return False
 
     def check_kill(self, damage_type):
         if damage_type in ["tank", "jet", "helicopter", "gunship"]:
-            print("The Demolition has been defeated.")
+            print("The Demolition expert has been defeated.")
             return True
-        elif damage_type == "bullet":
-            self.hp -= 1
-            if self.hp <= 0:
-                print("The Demolition has been defeated.")
-                return True
-            else:
-                return False
-        elif damage_type in ["rocket", "sniper"]:
-            self.hp -= 25
-            if self.hp <= 0:
-                print("The Demolition has been defeated.")
-                return True
-            else:
-                return False
+        else:
+            return False
+
 
 class Assault:
     def __init__(self):
-        self.hp = 20
-        self.speed = 100
-        self.armor = 20
-        self.resistance = []
-        self.weapons = ["M4A1 assault rifle", "AWP sniper rifle", "colt 1911 pistol"]
+        self.hp = 750
+        self.speed = 20
+        self.ammo = 300
 
-    def take_damage(self, damage_type, damage_amount):
-        self.armor -= damage_amount
-        if self.armor <= 0:
-            self.hp -= 1
-            if self.hp <= 0:
-                print("The Assault has been defeated.")
-                return True
-            else:
-                return False
+    def take_damage(self, damage_amount):
+        self.hp -= damage_amount
+        if self.hp <= 0:
+            print("The Assault soldier has been defeated.")
+            return True
         else:
             return False
+
+
+class Enemy:
+    def __init__(self, name, health, points):
+        self.name = name
+        self.health = health
+        self.points = points
+
+    def deal_damage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            print(f"The {self.name} has been defeated. You earned {self.points} points.")
+            player.points += self.points
+            return True
+        else:
+            return False
+
+
+player = Player()
+player.choose_class()
+player.choose_weapon()
+
+
+
 
 class Enemy:
     def __init__(self, name, health, points):
@@ -219,33 +252,7 @@ if bought_item:
     print("Proceeding with the mission...")
    
    
-class Player:
-    def __init__(self, player_class):
-        self.player_class = player_class
-        self.health = 100
-        self.weapon = None
 
-    def choose_weapon(self):
-        if self.player_class == "Assault":
-            self.weapon = M4A1()
-        elif self.player_class == "Sniper":
-            self.weapon = AWPSniperRifle()
-        elif self.player_class == "Demolition":
-            self.weapon = RPG()
-        elif self.player_class == "Juggernaut":
-            self.weapon = Minigun()
-
-    def shoot(self):
-        if self.weapon:
-            self.weapon.shoot()
-        else:
-            print("No weapon chosen.")
-
-    def reload(self):
-        if self.weapon:
-            self.weapon.reload()
-        else:
-            print("No weapon chosen.")
 
     def take_damage(self, damage):
         self.health -= damage
@@ -266,78 +273,28 @@ class Infantry:
             return True  # Signal that the enemy is defeated
         return False  # Signal that the enemy is still alive
 
-
-class M4A1:
-    def __init__(self):
-        self.range = 300
-        self.damage = 50
-        self.magazine_capacity = 30
-        self.ammo_count = self.magazine_capacity
-
-    def shoot(self):
-        if self.ammo_count > 0:
-            self.ammo_count -= 1
-            print("M4A1 rifle fires and deals {} damage.".format(self.damage))
-        else:
-            print("M4A1 rifle is out of ammo. Reload!")
-
-    def reload(self):
-        self.ammo_count = self.magazine_capacity
-        print("M4A1 rifle has been reloaded. Magazine capacity: {}".format(self.magazine_capacity))
-
-
-class AWPSniperRifle:
-    def __init__(self):
-        self.range = 5000
-        self.damage = 500
-        self.ammo_capacity = 5
-
-    def shoot(self):
-        if self.ammo_capacity > 0:
-            print("AWP sniper rifle shoots with {} damage.".format(self.damage))
-            self.ammo_capacity -= 1
-        else:
-            print("AWP sniper rifle is out of ammo. Reload!")
-
-    def reload(self):
-        print("Reloading AWP sniper rifle.")
-        self.ammo_capacity = 5
-
-
-class RPG:
-    def __init__(self):
-        self.damage = 200
-        self.ammo_capacity = 1
-
-    def shoot(self):
-        if self.ammo_capacity > 0:
-            print("RPG fires and deals {} damage.".format(self.damage))
-            self.ammo_capacity -= 1
-        else:
-            print("RPG is out of ammo. Reload!")
-
-    def reload(self):
-        print("Reloading RPG.")
-        self.ammo_capacity = 1
-
-
-class Minigun:
-    def __init__(self):
-        self.damage = 30
-
-    def shoot(self):
-        print("Minigun fires and deals {} damage.".format(self.damage))
-
-    def reload(self):
-        print("Minigun does not require reloading.")
-
-
-player_class = input("Choose your class (Assault, Sniper, Demolition, Juggernaut): ")
-player = Player(player_class)
-player.choose_weapon()
-
 enemy_count = 10
 enemy = Infantry(50)
+
+print("You arrive at the compound and are taking extremely heavy fire from the runway. You engage.")
+
+while enemy_count > 0 and not player.take_damage(10):
+    player.shoot()
+    if enemy.take_damage(player.weapon.damage):
+        enemy_count -= 1
+
+print("You have mowed down all the infantry.")
+
+for meter in range(1, 6):
+    print(f"Sprinting through meter {meter}...")
+    if meter == 1.5:
+        print("You come across an NPC.")
+        npc = NPC("Private Jackson Samuleson")
+        npc.talk("Hello, soldier. I'm Private Jackson Samuleson.")
+        npc.talk("I'm here to provide you with some important information.")
+        npc.talk("We have spotted a 20-tank battalion moving to resecure the base.")
+        npc.talk("I recommend using a killstreak to destroy them.")
+   
 
 print("You arrive at the compound and are taking extremely heavy fire from the runway. You engage.")
 
