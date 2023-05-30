@@ -4,7 +4,7 @@ class Juggernaut:
         self.damage = 100
         self.ammo = 200
         self.reload_time = 20
-        self.health = 500
+        self.health = 2
         self.armor = 500
 
     def description(self):
@@ -164,46 +164,6 @@ def engage_final_encounter(points, health):
 
     return points, health
 
-def game():
-    player = select_class()
-    points = 2000
-    health = player.health
-
-    print("\n--- GAME START ---")
-    print("You are now on a mission to secure a heavily armed Wadiyan objective.")
-    print("The objective is a fortified compound in the middle of Al Hilal.")
-    print("It is a major strategic point that must be captured.")
-
-    print("You start driving and come across an NPC who instructs you on how to use a buy station.")
-
-    while True:
-        print("\nWhat do you want to do?")
-        print("1. Interact with the buy station")
-        print("2. Continue the mission")
-        print("3. Quit")
-
-        choice = int(input("Enter your choice: "))
-
-        if choice == 1:
-            points = use_buy_station(points)
-        elif choice == 2:
-            points, health = encounter_enemies(points, health)
-            points, health = choose_path(points, health)
-            points, health = engage_final_encounter(points, health)
-            break
-        elif choice == 3:
-            print("You quit the game.")
-            return
-
-    print("\n--- GAME OVER ---")
-    print("Points:", points)
-    print("Health:", health)
-
-game()
-
-
-import time
-
 class Killstreak:
     def __init__(self, health, armor, damage):
         self.health = health
@@ -265,20 +225,13 @@ def return_to_base():
     print("\nYour killstreak flies away and the mission ends.")
     print("You return back to base.")
 
-def game():
-    points = 2000
 
-    print("You are a soldier in the United States Army Rangers.")
-    print("You have been sent to fight in the Republic of Wadiya.")
-
-    # Rest of the game code
 
     points = engage_tanks(points)
     return_to_base()
 
-game()
 
-import time
+
 
 class Enemy:
     def __init__(self, health, damage):
@@ -377,18 +330,14 @@ def exfil():
     print("\nA CH-53 arrives to exfil you.")
     print("You board the helicopter and leave the area.")
 
-def game():
-    points = 2000
 
-    print("You are a soldier in the United States Army Rangers.")
-    print("You have been sent to fight in the Republic of Wadiya.")
 
     points = defend_wave(25, 0, points)
     points = interact_with_buystation(points)
     points = defend_wave(50, 10, points)
     exfil()
 
-game()
+
 
 def interrogation():
     print("You find yourself in an interrogation room, facing General Mohammed Karim.")
