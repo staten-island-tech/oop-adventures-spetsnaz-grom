@@ -31,12 +31,48 @@ class gunship(Basic):
     def __str__(self):
         return f"{self.name}, {self.jet}, {self.id}, {self.tag} {self.dropbombs}"
     
-fighterjet = []
-Stealthjet = []
-Stealthjet = {}
+class enemycar1(Basic):
+    def __init__(self,id,tag,enemy1,boost2):
+        super().__init__(self,id,tag)
+        self.boost2 = boost2
+    def __str__(self):
+        return f"{self.name}, {self.jet}, {self.id}, {self.tag} {self.boost2}"
+    
+class enemycar2(Basic):
+    def __init__(self,id,tag,enemy1,boost3):
+        super().__init__(self,id,tag)
+        self.boost2 = boost3
+    def __str__(self):
+        return f"{self.name}, {self.jet}, {self.id}, {self.tag} {self.boost3}"
+    
+class FordMustang(Basic):
+    def __init__(self,id,tag,enemy1,nitro):
+        super().__init__(self,id,tag)
+        self.nitro = nitro 
+    def __str__(self):
+        return f"{self.name}, {self.jet}, {self.id}, {self.tag} {self.nitro}"
+    
+tank = []
+Speedjet= []
+enemycar1 = []
+enemycar2 =[]
+FordMustang = []
+gunship = {}
 
 print("choose your vehicle")
 time.sleep(1)
+
+#possible intro 
+
+print
+
+
+
+
+
+
+
+
 
 #first choice
 
@@ -63,3 +99,37 @@ elif choice1.lower() == "c":
     time.sleep(1)
 
 customize_your_jet = "Y"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
