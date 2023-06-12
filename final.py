@@ -1,3 +1,4 @@
+import time
 class Juggernaut:
     def __init__(self):
         self.weapon = "Minigun"
@@ -171,7 +172,9 @@ class Killstreak:
         self.damage = damage
 
 def engage_tanks(points):
-    tanks = 20
+
+    tanks = [20]
+
     destroyed_tanks = 0
 
     print("\nPrivate Andrew Stevens warns you of 20 T-14 Armata tanks heading your way.")
@@ -354,7 +357,7 @@ def interrogation():
         print("General Karim: 'You have made a grave mistake.'")
 
         if answer_1 == "B" or answer_1 == "C":
-            print("General Karim: 'Since you failed to provide the correct answer, an innocent man must pay the price.'")
+            print("General Karim: 'Since you failed to provide the correct answer, an innocent man with a family must pay the price.'")
             print("The general hits you with a revolver, and you witness the death of another man.")
 
         print("General Karim: 'Now, tell me, who stole the key to the prison armory?'")
@@ -365,7 +368,7 @@ def interrogation():
                          "Enter your choice (A, B, or C): ")
 
         if answer_2 == "A" or answer_2 == "B":
-            print("General Karim: 'You are responsible for the lives that are lost.'")
+            print("General Karim: 'Just know you are responsible for the lives that are lost.'")
             print("The general hits you with a revolver, and another innocent man loses his life.")
         else:
             print("General Karim: 'Your defiance will have consequences.'")
@@ -373,10 +376,9 @@ def interrogation():
             print("General Karim is forced to release you and flee the scene.")
 
 def prison_escape():
-    print("After the explosion, chaos ensues in the prison. The opportunity for escape arises.")
+    print("After the explosion, chaos ensues in the prison. The opportunity for escape arises, and you escape.")
 
-    # Add logic for the prison escape scenario
-
+    
 interrogation()
 prison_escape()
 
@@ -410,11 +412,11 @@ def armory():
 def prison_run():
     print("You quickly run through the prison, encountering 6 enemies.")
 
-    # Add logic to handle combat with enemies using chosen weapon or grenade
+ 
 
     print("After dealing with the enemies, you enter another room and are attacked by a Wadiyan Soldier.")
 
-    # Add logic for the encounter with the Wadiyan Soldier
+    
 
 def rescue_mission():
     print("Just as the Wadiyan Soldier is about to shoot you, he is shot by Spetsnaz Gru team members who have come to rescue you.")
@@ -539,12 +541,7 @@ class Game:
                 print("You failed to dodge the attack. You are killed by the Apache.")
                 break
 
-# Start the game
-game = Game()
-game.play()
 
-class Game:
-    # ... existing code ...
 
     def fight_general(self):
         print("You wake up to find the General approaching. He stabs you with a knife.")
