@@ -1,3 +1,5 @@
+import random
+
 print("You are a soldier in the United States Army Rangers, and you have been sent to fight in the Republic of Wadiya.")
 print("You arrive at Fort Ripton, a military base in the occupied province of Al Hilal, and are immediately called to select your choice of gear by high command.")
 
@@ -6,6 +8,28 @@ class Player:
     def __init__(self):
         self.chosen_class = None
         self.points = 2000
+        self.weapon = None
+        self.juggernaut = Juggernaut()
+        self.demolition = Demolition()
+        self.assault = Assault()
+
+    # ... (existing methods)
+
+    def choose_weapon(self):
+        if self.chosen_class == "Assault":
+            self.weapon = "M4A1 assault rifle"
+        elif self.chosen_class == "Demolition":
+            self.weapon = "Grenade launcher"
+        elif self.chosen_class == "Juggernaut":
+            self.weapon = "Minigun"
+        elif self.chosen_class == "Sniper":
+            self.weapon = "AWP sniper rifle"
+
+    def shoot(self):
+        if self.weapon is not None:
+            print(f"{self.weapon} fires.")
+        else:
+            print("No weapon selected.")
 
     def choose_class(self):
         if self.chosen_class is not None:
@@ -76,17 +100,12 @@ class Juggernaut:
         elif damage_type == "bullet":
             self.armor -= 1
             if self.armor <= 0:
-                print("The Juggernaut has been defeated.")
-                return True
-            else:
+                print("The Juggernaut's armor has been depleted.")
                 return False
-        elif damage_type in ["rocket", "sniper"]:
-            self.hp -= 100
-            if self.hp <= 0:
-                print("The Juggernaut has been defeated.")
-                return True
             else:
-                return False
+                return True
+        else:
+            return False
 
 
 class Demolition:
@@ -315,4 +334,59 @@ for meter in range(1, 6):
         npc.talk("We have spotted a 20-tank battalion moving to resecure the base.")
         npc.talk("I recommend using a killstreak to destroy them.")
    
-   
+import time
+
+class Armatatank:
+    def __init__(self, armor, health, damage):
+        self.armor = armor
+        self.health = health
+        self.damage = damage
+
+    def take_damage(self, damage):
+        total_damage = damage - self.armor
+        if total_damage > 0:
+            self.health -= total_damage
+            if self.health <= 0:
+                return True  # Tank destroyed
+        return False
+
+# Assume you have already activated the killstreak
+
+tanks = []
+for _ in range(20):
+    tanks.append(Armatatank(4000, 1000, 300))
+
+tank_count = len(tanks)
+points = 0
+start_time = time.time()
+
+while tank_count > 0:
+    current_time = time.time()
+    elapsed_time = current_time - start_time
+
+    if elapsed_time >= 5:
+        # Every 5 seconds, an anti-air missile is launched
+        # and deals damage to the killstreak
+        player.take_damage(300)
+        start_time = current_time
+
+    command = input("Enter 'fire' to attack the tanks: ")
+
+    if command == "fire":
+        tank_index = random.randint(0, tank_count - 1)
+        tank = tanks[tank_index]
+        destroyed = tank.take_damage(player.killstreak_damage)
+
+        if destroyed:
+            del tanks[tank_index]
+            tank_count -= 1
+            points += 100
+            print(f"A T-14 has been destroyed. Total points: {points}")
+        
+        if tank_count == 0:
+            print("All armatas have been destroyed.")
+            break
+
+print("Mission complete. Your killstreak flies away.")
+player.points += points
+print(f"You earned {points} points. Total points: {player.points}")
