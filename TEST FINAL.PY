@@ -219,9 +219,9 @@ for mile in range(1, 6):
         choice = input("You come across an NPC. Do you want to interact with him? (Y/N): ").strip().capitalize()
         if choice == "Y":
             print("You decide to interact with the NPC.")
-            print("NPC: Hello, American soldier. This here is a buystation. Let me tell you how it works.")
-            print("NPC: You can use the buystation by pressing the B key to interact with it.")
-            print("NPC: To make a purchase, press the A key.")
+            print("NPC: Hello, American soldier. Over there is the airbase.")
+            print("NPC: There is a buystation somewhere over which you automatically interact with .")
+            print("NPC: To make a purchase, type in number of the killstreak and buy it.")
             print("NPC: Each buystation buy costs 2000 points.")
             print("NPC: Good luck in your battle against terrorism!")
         else:
@@ -231,6 +231,172 @@ for mile in range(1, 6):
 
 print("You arrive at a hill overlooking the base, and you see a buystation. Buy a kill streak from the buystation to proceed.")
 
+
+
+
+import time
+
+class Enemy:
+    def __init__(self, health, damage):
+        self.health = health
+        self.damage = damage
+
+class ArmoredEnemy(Enemy):
+    def __init__(self):
+        super().__init__(600, 200)
+        self.armor = 300
+
+def encounter_enemies(points, health):
+    print("\nYou come across 10 enemies guarding the gate.")
+    input("Press Enter to continue...")
+
+    print("What do you want to do?")
+    print("1. Call in a drone strike")
+    print("2. Engage the enemies with your gun")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        print("You call in a drone strike. All enemies are eliminated.")
+        points += 20 * 10
+    elif choice == 2:
+        print("You engage the enemies with your gun.")
+
+        for _ in range(10):
+            health -= 300
+            points += 20
+
+        print("You eliminate all enemies, but take damage in the process.")
+
+    return points, health
+
+import random
+import time
+
+# Define the classes and functions...
+
+def choose_path(points, health):
+    print("\nAfter dealing with the enemies, you have a choice:")
+    print("1. Climb the air traffic control tower")
+    print("2. Move through the buildings")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        print("As you climb the air traffic control tower, it gets hit by RPG fire.")
+        print("You take 200 damage.")
+        health -= 200
+    elif choice == 2:
+        print("While moving through the buildings, you step on a claymore.")
+        print("You take 150 damage.")
+        health -= 150
+
+    return points, health
+
+def engage_final_encounter(points, health):
+    print("\nYou reach the runway, where the final encounter takes place.")
+    time.sleep(2)
+
+    print("What do you want to do?")
+    print("1. Wait for your team and engage together")
+    print("2. Engage by yourself")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        print("You wait for your team to catch up and engage together.")
+        print("You successfully eliminate all enemies.")
+    elif choice == 2:
+        print("You decide to engage the enemies by yourself.")
+        print("You take 70 damage, but manage to eliminate all enemies.")
+
+        health -= 70
+
+    return points, health
+
+def sprint_through_meters(points, health):
+    for meter in range(1, 6):
+        print(f"Sprinting through meter {meter}...")
+        time.sleep(1)
+        if meter == 1.5:
+            print("You come across an NPC.")
+            time.sleep(2)
+            print("Hello, soldier. I'm Private Andrew Rockman.")
+            time.sleep(2)
+            print("I'm here to provide you with some important information.")
+            time.sleep(2)
+            print("Our reaper drones have spotted a 20-tank battalion moving to secure the base.")
+            time.sleep(2)
+            print("The tanks are the newest T-14 Russian MBT, a powerful tank that will rain havoc upon the task force when they arrive.")
+            time.sleep(2)
+            print("Heavy anti-tank weaponry won't cut it here. I recommend using a killstreak to destroy them.")
+            time.sleep(2)
+        elif meter == 3:
+            points, health = encounter_enemies(points, health)
+        elif meter == 4:
+            points, health = choose_path(points, health)
+        elif meter == 5:
+            points, health = engage_final_encounter(points, health)
+
+    return points, health
+
+points = 0
+health = 1000
+
+print("Starting the mission...")
+
+# Call the sprint_through_meters function to play the game
+points, health = sprint_through_meters(points, health)
+
+
+
+
+
+
+import random
+import time
+
+class Armatatank:
+    def __init__(self, armor, health, damage):
+        self.armor = armor
+        self.health = health
+        self.damage = damage
+
+    def take_damage(self, damage):
+        total_damage = damage - self.armor
+        if total_damage > 0:
+            self.health -= total_damage
+            if self.health <= 0:
+                return True  # Tank destroyed
+        return False
+
+import random
+import time
+
+class Player:
+    def __init__(self):
+        self.killstreak_damage = 500
+        self.points = 0  # Initialize points attribute
+        self.killstreak_available = False  # Initialize killstreak availability
+
+    def take_damage(self, damage):
+        print(f"Player takes {damage} damage.")
+        # Add your own implementation here
+
+    def use_killstreak(self):
+        if self.killstreak_available:
+            print("Using killstreak...")
+            self.killstreak_damage *= 2  # Increase killstreak damage
+            self.killstreak_available = False
+        else:
+            print("No killstreak available.")
+
+    def buy_killstreak(self, buy_station):
+        buy_station.display_choices()
+        item_choice = input("Choose a killstreak to buy (enter the corresponding number): ")
+        bought_killstreak = buy_station.buy_item(item_choice)
+        if bought_killstreak:
+            self.killstreak_available = True
 
 class BuyStation:
     def __init__(self):
@@ -283,7 +449,19 @@ class BuyStation:
                 print(f"{key}: {value}")
             return item_name
 
+class Armatatank:
+    def __init__(self, health, armor, damage):
+        self.health = health
+        self.armor = armor
+        self.damage = damage
 
+    def take_damage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            return True  # Tank destroyed
+        return False
+
+player = Player()
 buy_station = BuyStation()
 buy_station.display_choices()
 item_choice = input("Choose an item to buy (enter the corresponding number): ")
@@ -291,61 +469,8 @@ bought_item = buy_station.buy_item(item_choice)
 
 if bought_item:
     print(f"You have acquired {bought_item}.")
+    player.buy_killstreak(buy_station)
     print("Proceeding with the mission...")
-   
-   
-class Infantry:
-    def __init__(self, health):
-        self.health = health
-
-    def take_damage(self, damage):
-        self.health -= damage
-        if self.health <= 0:
-            print("Enemy infantry has been defeated.")
-            return True  # Signal that the enemy is defeated
-        return False  # Signal that the enemy is still alive
-
-enemy_count = 10
-enemy = Infantry(50)
-
-print("You arrive at the compound and are taking extremely heavy fire from the runway. You engage.")
-
-while enemy_count > 0 and not player.take_damage(10):
-    player.shoot()
-    if enemy.take_damage(player.weapon.damage):
-        enemy_count -= 1
-
-print("You have mowed down all the infantry.")
-
-for meter in range(1, 6):
-    print(f"Sprinting through meter {meter}...")
-    if meter == 1.5:
-        print("You come across an NPC.")
-        npc = NPC("Private Jackson Samuleson")
-        npc.talk("Hello, soldier. I'm Private Jackson Samuleson.")
-        npc.talk("I'm here to provide you with some important information.")
-        npc.talk("We have spotted a 20-tank battalion moving to resecure the base.")
-        npc.talk("I recommend using a killstreak to destroy them.")
-   
-   
-
-import time
-
-class Armatatank:
-    def __init__(self, armor, health, damage):
-        self.armor = armor
-        self.health = health
-        self.damage = damage
-
-    def take_damage(self, damage):
-        total_damage = damage - self.armor
-        if total_damage > 0:
-            self.health -= total_damage
-            if self.health <= 0:
-                return True  # Tank destroyed
-        return False
-
-# Assume you have already activated the killstreak
 
 tanks = []
 for _ in range(20):
@@ -364,41 +489,30 @@ while tank_count > 0:
         # and deals damage to the killstreak
         player.take_damage(300)
         start_time = current_time
-def engage_tanks(player):
-    tank_count = len(tanks)
-    
-    while True:
-        command = input("Enter a command (fire/quit): ")
-        
-        if command == "quit":
-            break
-        
-        if command == "fire":
-            tank_index = random.randint(0, tank_count - 1)
-            tank = tanks[tank_index]
-            destroyed = tank.take_damage(player.killstreak_damage)
 
-            if destroyed:
-                del tanks[tank_index]
-                tank_count -= 1
-                player.points += 100
-                print(f"A T-14 has been destroyed. Total points: {player.points}")
+    command = input("Enter a command (fire/killstreak/quit): ")
 
-            if tank_count == 0:
-                print("All Armata tanks have been destroyed.")
-                break
-    
-    print("Mission complete. Your killstreak flies away.")
-    print(f"You earned {player.points} points. Total points: {player.points}")
+    if command == "quit":
+        break
 
-def return_to_base():
-    print("\nYour killstreak flies away and the mission ends.")
-    print("You return back to base.")
+    if command == "fire":
+        tank_index = random.randint(0, tank_count - 1)
+        tank = tanks[tank_index]
+        destroyed = tank.take_damage(player.killstreak_damage)
 
-# Example usage
-player = Player()
-engage_tanks(player)
-return_to_base()
+        if destroyed:
+            print("Tank destroyed!")
+            tanks.remove(tank)
+            tank_count -= 1
+            player.points += 100  # Update points attribute
+
+    if command == "killstreak":
+        player.use_killstreak()
+
+print(f"You destroyed {20 - tank_count} tanks and earned {player.points} points.")
+print("Mission complete.")
+print(f"You earned {player.points} points. Total points: {player.points}")
+
 
 
 
@@ -500,13 +614,21 @@ def interact_with_buystation(points):
 def exfil():
     print("\nA CH-53 arrives to exfil you.")
     print("You board the helicopter and leave the area.")
+    print("Unfortunately for you a wadiyan S-300 missile system takes aim at your chopper, and shoots it down along with you.")
+    print("Your entire team dies, and you fall out of the burning heli cargo hold.")
+    print ("A Wadiyan patrol finds your crash site and take you back to the camp.")
+    print ("You spend 8 months in the camps prison complex which is quite large.")
+    print ("You meet a Russian Spetsnaz Gru operator named Ruslan Pelishkov who was captured by the Wadiyans.")
+    print ("You and Ruslan become close friends, and soon he entrusted to you a key.")
+    print ("Ruslan also gives you a long range radio device, that you use to talk to Russian forces, since officially Ruslan was denounced by his country")
+    print ("An bombing raid by a Tu-160 hits the camps headquarters, and you are suspected of carrying it out")
+    print ("You are knocked out and are tooken somewhere.")
+points = 0
+points = defend_wave(25, 0, points)
+points = interact_with_buystation(points)
+points = defend_wave(50, 10, points)
+exfil()
 
-
-
-    points = defend_wave(25, 0, points)
-    points = interact_with_buystation(points)
-    points = defend_wave(50, 10, points)
-    exfil()
 
 
 
@@ -544,7 +666,7 @@ def interrogation():
             print("General Karim is forced to release you and flee the scene.")
 
 def prison_escape():
-    print("After the explosion, chaos ensues in the prison. The opportunity for escape arises, and you escape.")
+    print("With the help of a giant explosion, chaos ensues in the prison. The opportunity for escape arises, and you escape.")
 
     
 interrogation()
@@ -709,8 +831,10 @@ class Game:
                 print("You failed to dodge the attack. You are killed by the Apache.")
                 break
 
-
-
+        print("You see the General sprinting away to a Wadiyan UH-1")
+        print ("With your last rocket you take aim on the helicopter high above your head, and you fire")
+        print ("A piece of the helicopter hits you on your head and you get knocked out")
+    
     def fight_general(self):
         print("You wake up to find the General approaching. He stabs you with a knife.")
         self.defend_yourself()
