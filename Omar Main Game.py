@@ -10,6 +10,11 @@ class Basic:
         self.FordMustang = FordMustang 
         self.DodgeCharger = DodgeCharger 
         self.LamborghiniA = LamborghiniA
+
+class car(Basic):
+    def __init__(self, id, tag, car ):
+        super().__init__(id, tag,)
+        self.car = car
     
 class enemycar1(Basic):
     def __init__(self,id,tag,enemy1,boost2):
@@ -91,11 +96,11 @@ def select_car_intro():
 select_car_intro()
 
 def select_Car():
-    print("1. Ford Mustang Boss 429")
-    print("2. Dodge Charger 1978")
-    print("3. Lamborghini Aventador")
+    print("1. Ford Mustang ")
+    print("2. Dodge Charger ")
+    print("3. Lamborghini 1")
     
-    choice1 = int(input("Choose wisely by entering the number of your choice: "))
+    choice1 = int(input(" Enter the number of your choice: "))
 
     if choice1 == 1:
         user_car = FordMustang()
@@ -126,6 +131,7 @@ def select_Car():
     print("Let's get you racing!")
 
 select_Car()
+FordMustang()
  #first race
 
 time.sleep(3)
@@ -135,7 +141,26 @@ print("instructions: to move the car you will be asked diffrent questions, getti
 time.sleep(2)
 print("wrong answers will result in slowing down, now get ready ")
 time.sleep(2)
-print(" the race starts and your in second place use nitro?")
+print(" the race starts and your in second place ")
+time.sleep(2)
+
+import random 
+random_number = random.randint(1,10)
+guess = 0
+
+while guess != random_number:
+    guess = int(input("Guess a number from one to ten to use a boost"))
+    
+    if guess < random_number:
+        print("come on man too low were losing ")
+    elif guess > random_number:
+        print(" a little lower")
+    else:
+        print(" nice we got a boost")
+
+print("nice we won that race we should be able to face the big boss now")
+time.sleep(2)
+
 
 
 
